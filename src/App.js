@@ -1,23 +1,22 @@
-import logo from './logo.svg';
+import { useState, useEffect } from 'react';
 import './App.css';
+import BossList from './BossList';
+import { getBosses } from './services/fetch-utils';
 
 function App() {
+  const [bosses, setBosses] = useState([]);
+
+  async function fetchBossData() {
+    const data = await getBosses();
+
+    setBosses(data);
+  }
+  useEffect(() => {
+    fetchBossData();
+  }, []);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <BossList bosses={bosses}/>
     </div>
   );
 }
