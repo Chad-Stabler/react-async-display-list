@@ -5,3 +5,9 @@ export async function getBosses() {
 
   return response.body;
 }
+
+export async function getAnimals() {
+  const response = await client.from('animals'). select('*');
+
+  return response.body;
+}
