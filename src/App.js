@@ -3,12 +3,14 @@ import './App.css';
 import BossList from './BossList';
 import AnimalList from './AnimalList';
 import ToyList from './ToyList';
-import { getBosses, getAnimals, getToys } from './services/fetch-utils';
+import ShowList from './ShowList';
+import { getBosses, getAnimals, getToys, getShows } from './services/fetch-utils';
 
 function App() {
   const [animals, setAnimals] = useState([]);
   const [bosses, setBosses] = useState([]);
   const [toys, setToys] = useState([]);
+  const [shows, setShows] = useState([]);
 
   async function fetchBossData() {
     const data = await getBosses();
@@ -27,16 +29,24 @@ function App() {
 
     setToys(data);
   }
+
+  async function fetchShowData() {
+    const data = await getShows();
+
+    setShows(data);
+  }
   useEffect(() => {
     fetchBossData();
     fetchAnimalData();
     fetchToyData();
+    fetchShowData();
   }, []);
   return (
     <div className="App">
       <BossList bosses={bosses}/>
       <AnimalList animals={animals} />
       <ToyList toys={toys} />
+      <ShowList shows={shows} />
     </div>
   );
 }
