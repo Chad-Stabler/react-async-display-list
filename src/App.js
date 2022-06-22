@@ -1,23 +1,53 @@
-import logo from './logo.svg';
+import { useState, useEffect } from 'react';
 import './App.css';
+import BossList from './BossList';
+import AnimalList from './AnimalList';
+import ToyList from './ToyList';
+import ShowList from './ShowList';
+import { getBosses, getAnimals, getToys, getShows } from './services/fetch-utils';
 
 function App() {
+  const [animals, setAnimals] = useState([]);
+  const [bosses, setBosses] = useState([]);
+  const [toys, setToys] = useState([]);
+  const [shows, setShows] = useState([]);
+
+  async function fetchBossData() {
+    const data = await getBosses();
+
+    setBosses(data);
+  }
+
+  async function fetchAnimalData() {
+    const data = await getAnimals();
+
+    setAnimals(data);
+  }
+
+  async function fetchToyData() {
+    const data = await getToys();
+
+    setToys(data);
+  }
+
+  async function fetchShowData() {
+    const data = await getShows();
+
+    setShows(data);
+  }
+  useEffect(() => {
+    fetchBossData();
+    fetchAnimalData();
+    fetchToyData();
+    fetchShowData();
+  }, []);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div>Lists</div>
+      <BossList bosses={bosses}/>
+      <AnimalList animals={animals} />
+      <ToyList toys={toys} />
+      <ShowList shows={shows} />
     </div>
   );
 }
