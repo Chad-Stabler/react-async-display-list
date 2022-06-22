@@ -8,6 +8,12 @@ export async function getBosses() {
 
 export async function getAnimals() {
   const response = await client.from('animals'). select('*');
+  
+  return response.body;
+}
 
+export async function getToys() {
+  const response = await client.from('toys'). select('*');
+  
   return response.body;
 }
